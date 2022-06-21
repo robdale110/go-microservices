@@ -34,3 +34,4 @@ go.work
 *.vsix
 front-end/frontApp
 broker-service/brokerApp
+authentication-service/authApp
