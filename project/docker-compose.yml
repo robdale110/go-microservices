@@ -32,6 +32,17 @@ services:
       - "1025:1025"
       - "8025:8025"
 
+  rabbitmq:
+    image: "rabbitmq:3.9-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    deploy: 
+      mode: replicated
+      replicas: 1
+    volumes:
+      - ./db-data/rabbitmq/:/var/lib/rabbitmq/
+    
   broker-service:
     build:
       context: ./../broker-service
@@ -82,3 +93,11 @@ services:
       MAIL_PASSWORD: ""
       FROM_NAME: "John mith"
       FROM_ADDRESS: "john.smith@example.com"
+
+  listener-service:
+    build:
+      context: ./../listener-service
+      dockerfile: ./../listener-service/listener-service.dockerfile
+    deploy:
+      mode: replicated
+      replicas: 1
