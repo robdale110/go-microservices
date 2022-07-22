@@ -40,3 +40,4 @@ logger-service/loggerServiceApp
 listener-service/listenerApp
 mail-service/mailerApp
 mail-service/mailerApp
+front-end/frontEndApp

@@ -1,6 +1,12 @@
 version: '3'
 
 services:
+  front-end:
+    image: robdale110/front-end:1.0.3
+    deploy:
+      mode: replicated
+      replicas: 1
+      
   broker-service:
     image: robdale110/broker-service:1.0.2
     ports:
