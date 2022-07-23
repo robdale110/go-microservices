@@ -1,16 +1,28 @@
 version: '3'
 
 services:
-  front-end:
-    image: robdale110/front-end:1.0.3
+  caddy:
+    image: robdale110/micro-caddy:1.0.1
     deploy:
       mode: replicated
       replicas: 1
-      
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+
+  front-end:
+    image: robdale110/front-end:1.0.4
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      BROKER_URL: "http://backend"
+
   broker-service:
     image: robdale110/broker-service:1.0.2
-    ports:
-      - "8081:80"
     deploy:
       mode: replicated
       replicas: 1
@@ -90,3 +102,8 @@ services:
       POSTGRES_DB: users
     volumes:
       - ./db-data/postgres/:/var/lib/postgresql/data/
+
+volumes:
+  caddy_data:
+    external: true
+  caddy_config:
